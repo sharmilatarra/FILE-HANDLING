@@ -1,0 +1,48 @@
+import java.nio.file.*;
+import java.io.IOException;
+import java.util.List;
+
+public class FileUtility {
+
+    // Create or overwrite a text file
+    public static void writeToFile(String fileName, String content) {
+        try {
+            Files.write(Paths.get(fileName), content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            System.out.println("File written: " + fileName);
+        } catch (IOException e) {
+            System.out.println("Error writing file: " + e.getMessage());
+        }
+    }
+
+    // Read and display contents of a file
+    public static void readFromFile(String fileName) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(fileName));
+            System.out.println("File contents:");
+            for (String line : lines) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    // Append new content to an existing file
+    public static void appendToFile(String fileName, String newText) {
+        try {
+            Files.write(Paths.get(fileName), ("\n" + newText).getBytes(), StandardOpenOption.APPEND);
+            System.out.println("Content appended to: " + fileName);
+        } catch (IOException e) {
+            System.out.println("Error appending to file: " + e.getMessage());
+        }
+    }
+
+    // Main method to test file operations
+    public static void main(String[] args) {
+        String file = "notes.txt";
+
+        writeToFile(file, "This is the starting content of the file.");
+        appendToFile(file, "Here is some additional content.");
+        readFromFile(file);
+    }
+}
